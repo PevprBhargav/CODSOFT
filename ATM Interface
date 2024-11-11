@@ -1,0 +1,73 @@
+import java.util.Scanner;
+
+// BankAccount class representing the user's account
+class BankAccount {
+    private double balance;
+
+    public BankAccount(double initialBalance) {
+        this.balance = initialBalance;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Successfully deposited: $" + amount);
+        } else {
+            System.out.println("Deposit amount must be positive.");
+        }
+    }
+
+    public boolean withdraw(double amount) {
+        if (amount > balance) {
+            System.out.println("Insufficient balance. Withdrawal failed.");
+            return false;
+        } else if (amount <= 0) {
+            System.out.println("Withdrawal amount must be positive.");
+            return false;
+        } else {
+            balance -= amount;
+            System.out.println("Successfully withdrawn: $" + amount);
+            return true;
+        }
+    }
+}
+
+// ATM class providing the ATM operations
+class ATM {
+    private BankAccount account;
+
+    public ATM(BankAccount account) {
+        this.account = account;
+    }
+
+    public void withdraw(double amount) {
+        if (account.withdraw(amount)) {
+            System.out.println("Please collect your cash.");
+        }
+    }
+
+    public void deposit(double amount) {
+        account.deposit(amount);
+    }
+
+    public void checkBalance() {
+        System.out.println("Your current balance is: $" + account.getBalance());
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Creating a bank account with an initial balance
+        BankAccount account = new BankAccount(1000.00);  // Example initial balance
+        ATM atm = new ATM(account);
+
+        boolean exit = false;
+
+        while (!exit) {
+            System
